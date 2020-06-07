@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>log</title>
+</head>
+<style type="text/css">
+
+    a {
+        color: #06f;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #ff3136;
+        text-decoration: none;
+    }
+
+
+</style>
+<script th:src="@{/jquery-3.4.1.js}"></script>
+<script th:src="@{/test.js}"></script>
+<script language="JavaScript">
+    window.onload = function()
+    {
+        $.ajax({
+            //type、contentType必填,指明传参方式
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            url: "http://101.201.121.174:80/api/showLog",
+            success: function(data){
+                if(data.length>0) {
+                    $("#p").html("");
+
+                    var element = document.getElementById("id1");
+                    // var ps = document.getElementById('id1');
+                    for (var i = 0; i < data.length; i++) {
+                        var newEle = document.createElement("p");
+                        newEle.innerHTML = data[i];  //innerText也可用
+                        element.appendChild(newEle);   //追加的元素在div容器内
+                    }
+                }
+                // $("#id1").html(data);
+                // for (var i = 0; i < data.length; i++)
+                // { //遍历一下json数据  
+                //     // getP(data[i]);
+                //     ps.createElement('p');
+                //     ps.innerHTML=data[i];
+                //
+                // }
+
+            }
+        });
+
+    }
+
+
+</script>
+<style type="text/css">
+    .submit{
+        border: 1px solid #ccc;
+        padding: 7px 0;
+        background: rgba(44, 34, 247, 0.2);
+        border-radius: 3px;
+        padding-left:5px;
+        padding-right:5px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+    }
+</style>
+
+
+<body>
+<br/>
+<a href="http://101.201.121.174:80/api/registerPage" >注册</a>&nbsp;&nbsp;&nbsp;
+<a href="http://101.201.121.174:80/api/logoffPage" >注销</a>&nbsp;&nbsp;&nbsp;
+<input type="button" value="所负责类别的销售状态" class="submit" onclick="windowOfSales()"/>&nbsp;&nbsp;&nbsp;
+<input type="button" value="所负责类别的商品库存管理" class="submit" onclick="windowOfSalesman()"/>&nbsp;&nbsp;&nbsp;
+<input type="button" value="客户的浏览/购买日志记录" class="submit" onclick="windowOfLog()"/>&nbsp;&nbsp;&nbsp;
+<br/>
+<br>
+
+<div id="id1" align="center"><p id="p">没有客户的浏览/购买日志记录</p></div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration monitorInterval="30">
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%m%n" />
+        </Console>
+
+        <RollingFile name="logfile" immediateFlush="true" fileName="logs/CNTCore.log"
+            filePattern="logs/CNTCore.log.%d{yyyy-MM-dd-a}.gz" append="true">
+            <PatternLayout>
+                <pattern>%d %t %p %c - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="userAndCompanyMigratedFile" immediateFlush="true" fileName="logs/UserServiceImple.log"
+            filePattern="logs/UserServiceImple.log.%d{yyyy-MM-dd-a}.gz" append="true">
+            <PatternLayout>
+                <pattern>%d %t %p %c - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.example.demo" level="debug" additivity="true">
+            <AppenderRef ref="logfile" />
+            <AppenderRef ref="stdout" />
+        </Logger>
+        <Logger name="com.example.demo.service.UserServiceImple.java" level="debug">
+            <AppenderRef ref="userAndCompanyMigratedFile" />
+        </Logger>
+    </Loggers>
+
+</configuration>

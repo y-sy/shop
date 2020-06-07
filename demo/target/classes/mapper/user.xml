@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <insert id="addUser">
+        insert into user values(#{mail},#{password},#{money})
+    </insert>
+
+    <insert id="addPortraitOfUser">
+        insert into portrait_of_user values(#{mail},"","","")
+    </insert>
+
+    <insert id="addShoppingCharts">
+        insert into shopping_charts values(#{user_id},#{goods_id},#{amount})
+    </insert>
+
+
+    <select id="selectALLUser" resultType="com.example.demo.entity.User">
+<!--        select * from user where mail=#{mail}-->
+        select * from user
+    </select>
+
+    <select id="selectALLSalesman" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from salesman
+    </select>
+
+    <select id="selectALLGoods" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from goods
+    </select>
+
+    <select id="selectShoppingChartByMail" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from shopping_charts where user_id=#{mail}
+    </select>
+
+    <select id="selectGoodsById" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from goods where id=#{id}
+    </select>
+
+    <update id="updateGoodsAmount" >
+        UPDATE goods
+        SET amount=amount-#{amount}
+        WHERE id=#{id}
+    </update>
+
+    <select id="selectALLShoppingCharts" resultType="com.alibaba.fastjson.JSONObject">
+        select * from shopping_charts
+    </select>
+
+    <update id="updateShoppingCharts" >
+        UPDATE shopping_charts
+        SET amount=amount+#{amount}
+        WHERE user_id=#{user_id} and goods_id=#{goods_id}
+    </update>
+
+    <select id="selectUserByMail" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from user where mail=#{mail}
+    </select>
+
+    <select id="selectSalesmanById" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from salesman where sid=#{id}
+    </select>
+
+    <select id="selectGoodsByKind" resultType="com.alibaba.fastjson.JSONObject">
+        <!--        select * from user where mail=#{mail}-->
+        select * from goods where kind=#{kind}
+    </select>
+
+    <insert id="insertOrders" parameterType="com.example.demo.entity.Orders">
+        insert into orders values(#{id},#{mail},#{goods_id_list},#{goods_amount_list},#{timing},#{address},#{total})
+    </insert>
+
+    <delete id="deleteShoppingChart">
+        delete from shopping_charts where user_id=#{mail} and goods_id=#{goods_id}
+    </delete>
+
+    <update id="deductMoney" >
+        UPDATE user
+        SET money=money-#{money}
+        WHERE mail=#{mail}
+    </update>
+
+    <update id="recharge" >
+        UPDATE user
+        SET money=money+#{money}
+        WHERE mail=#{mail}
+    </update>
+
+    <delete id="deleteUser">
+        delete from user where mail=#{mail} and password=#{password}
+    </delete>
+
+    <delete id="deleteGoods">
+        delete from goods where id=#{id}
+    </delete>
+
+    <delete id="deleteSalesman">
+        delete from salesman where sid=#{sid}
+    </delete>
+
+    <update id="updateGoods" >
+        UPDATE goods
+        SET goods_name=#{goods_name},cost=#{cost},price=#{price},amount=#{amount},kind=#{kind}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateSalesman" >
+        UPDATE salesman
+        SET password=#{pwd}
+        WHERE sid=#{sid}
+    </update>
+
+    <insert id="insertGoods" >
+        insert into goods values(#{id},#{goods_name},#{cost},#{price},#{amount},#{kind})
+    </insert>
+
+    <insert id="insertSalesman" >
+        insert into salesman values(#{sid},#{password},#{kind})
+    </insert>
+
+
+    <select id="selectALLOrders" resultType="com.alibaba.fastjson.JSONObject">
+        select * from orders
+    </select>
+
+    <select id="orderNameListById" resultType="com.alibaba.fastjson.JSONObject">
+        select * from orders where id=#{id}
+    </select>
+
+    <select id="selectAllPOU" resultType="com.alibaba.fastjson.JSONObject">
+        select * from portrait_of_user
+    </select>
+
+    <update id="updatePOU" >
+        UPDATE portrait_of_user
+        SET like_keywords=#{like_keywords},search_keywords=#{search_keywords}
+        WHERE mail=#{mail}
+    </update>
+
+    <update id="updatePOUC" >
+        UPDATE portrait_of_user
+        SET like_keywords=#{like_keywords},chart_keywords=#{chart_keywords}
+        WHERE mail=#{mail}
+    </update>
+
+    <select id="countOfPOU" resultType="int">
+        select count(*) from portrait_of_user
+    </select>
+
+    <select id="selectAllPOU_mail_likeKeywords" resultType="com.alibaba.fastjson.JSONObject">
+        select mail,like_keywords from portrait_of_user
+    </select>
+
+    <select id="selectKindBySid" resultType="com.alibaba.fastjson.JSONObject">
+        select * from salesman where sid=#{sid}
+    </select>
+
+</mapper>
